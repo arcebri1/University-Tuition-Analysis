@@ -175,7 +175,7 @@ d3.csv("tuition_vs_salary.csv").then(function(Tuition_Cost) {
     .append("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d[chosenYAxis]))
-    .attr("r", 15)
+    .attr("r", 7)
     .attr("fill", d=>d.color)
     .attr("opacity", 0.5)
 
