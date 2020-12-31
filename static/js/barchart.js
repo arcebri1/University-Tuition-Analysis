@@ -40,6 +40,12 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
     let privateTuition = privateSchools.map(d => d.in_state_tuition)
     console.log(privateTuition)
 
+    let outStatePrivateTuition = privateSchools.map(d => d.out_of_state_tuition)
+    console.log(outStatePrivateTuition)
+
+    let totalOutStatePrivateTuitions = privateSchools.map(d => d.out_of_state_total)
+    console.log(totalOutStatePrivateTuitions)
+
     //syntax: array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
     let totalPrivateTuition = privateTuition.reduce(
         function (t, s) {
@@ -48,6 +54,22 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
     );
 
     console.log(totalPrivateTuition)
+
+    let totalOutStatePrivateTuition = outStatePrivateTuition.reduce(
+        function (t, s) {
+            return parseInt(t) + parseInt(s);
+        }
+    );
+
+    console.log(totalOutStatePrivateTuition)
+
+    let totalOutStatePrivTuition = totalOutStatePrivateTuitions.reduce(
+        function (t, s) {
+            return parseInt(t) + parseInt(s);
+        }
+    );
+
+    console.log(totalOutStatePrivTuition)
 
     function selectPublic(school) {
         return school.type === 'Public'
@@ -58,6 +80,12 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
     let publicTuition = publicSchools.map(d => d.in_state_tuition)
     console.log(publicTuition)
 
+    let outStatePublicTuition = publicSchools.map(d => d.out_of_state_tuition)
+    console.log(outStatePublicTuition)
+
+    let totalOutStatePublicTuition = publicSchools.map(d => d.out_of_state_tuition)
+    console.log(totalOutStatePublicTuition)
+
     //syntax: array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
     let totalPublicTuition = publicTuition.reduce(
         function (t, s) {
@@ -67,11 +95,40 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
 
     console.log(totalPublicTuition)
 
+    let sumOutStatePublicTuition = outStatePublicTuition.reduce(
+        function (t, s) {
+            return parseInt(t) + parseInt(s);
+        }
+    );
+
+    console.log(sumOutStatePublicTuition)
+
+    let totalSumOutStatePublicTuition = totalOutStatePublicTuition.reduce(
+        function (t, s) {
+            return parseInt(t) + parseInt(s);
+        }
+    );
+
+    console.log(totalSumOutStatePublicTuition)
+
     let avgPrivateTuition = Math.round(totalPrivateTuition / totalData)
     console.log(avgPrivateTuition)
 
     let avgPublicTuition = Math.round(totalPublicTuition / totalData)
     console.log(avgPublicTuition)
+
+    let outStateAvgPrivateTuition = Math.round(totalOutStatePrivateTuition / totalData)
+    console.log(outStateAvgPrivateTuition)
+
+    let totalOutStateAvgPrivateTuition = Math.round(totalOutStatePrivTuition / totalData)
+    console.log(totalOutStateAvgPrivateTuition)
+
+    let outStateAvgPublicTuition = Math.round(sumOutStatePublicTuition / totalData)
+    console.log(outStateAvgPublicTuition)
+
+    let totalOutStateAvgPublicTuition = Math.round(totalSumOutStatePublicTuition / totalData)
+    console.log(totalOutStateAvgPublicTuition)
+    
 
 
     //chart.js
@@ -143,7 +200,7 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
 
         // The data for our dataset
         data: {
-            labels: ['Private & Public'],
+            labels: ['In-State', 'Out-State'],
             datasets: [{
                 label: 'Private',
                 // type: 'bar',
@@ -151,7 +208,7 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
                 borderColor: 'black',
                 borderWidth: 1,
                 hoverBackgroundColor: 'green',
-                data: [avgPrivateTuition],
+                data: [avgPrivateTuition, outStateAvgPrivateTuition],
                 order: 1
             },
             {
@@ -161,9 +218,10 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
                 borderColor: 'black',
                 borderWidth: 1,
                 hoverBackgroundColor: 'red',
-                data: [avgPublicTuition],
-                order: 2
+                data: [avgPublicTuition, outStateAvgPublicTuition],
+                order: 3
             },
+            
             ]
         },
 
@@ -175,7 +233,7 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
             },
             title: {
                 display: true,
-                text: 'Avg Cost of In-State Tuition for Public & Private Schools',
+                text: 'Avg Cost of In-State & Out-State Tuition for Public & Private Schools',
                 fontSize: 15
             },
             legend: {
@@ -236,7 +294,7 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
 
         // The data for our dataset
         data: {
-            labels: ['Private & Public'],
+            labels: ['In-State', 'Out-State'],
             datasets: [{
                 label: 'Private',
                 // type: 'bar',
@@ -244,7 +302,7 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
                 borderColor: 'black',
                 borderWidth: 1,
                 hoverBackgroundColor: 'green',
-                data: [totalAvgPrivateTuition],
+                data: [totalAvgPrivateTuition, totalOutStateAvgPrivateTuition],
                 order: 1
             },
             {
@@ -254,7 +312,7 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
                 borderColor: 'black',
                 borderWidth: 1,
                 hoverBackgroundColor: 'red',
-                data: [totalAvgPublicTuition],
+                data: [totalAvgPublicTuition, totalOutStateAvgPublicTuition],
                 order: 2
             },
             ]
@@ -268,7 +326,7 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
             },
             title: {
                 display: true,
-                text: 'Avg Total Cost of In-State Tuition for Public & Private Schools',
+                text: 'Avg Total Cost of In-State & Out-State Tuition for Public & Private Schools',
                 fontSize: 15
             },
             legend: {
@@ -301,37 +359,250 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
         let twoYrTuition = twoYrSchools.map(d => d.in_state_tuition)
         console.log(twoYrTuition)
 
+        let totalTwoYrColleges = twoYrTuition.length
+        console.log(totalTwoYrColleges)
+    
+        let totalTwoYrTuition = parseInt(twoYrTuition)
+
+        console.log(totalTwoYrTuition)
+
+        function select4Yr(school) {
+            return school.degree_length === '4 Year'
+        }
+
+        //  console.log(select4Yr)
+
+        let fourYrSchools = schoolData.filter(select4Yr)
+        console.log(fourYrSchools)
+
+        let fourYrTuition = fourYrSchools.map(d => d.in_state_tuition)
+        console.log(fourYrTuition)
+
+        let totalFourYrColleges = fourYrTuition.length
+        console.log(totalFourYrColleges)
+
     //     //syntax: array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
-    //     let totalPrivateTuition = privateTuition.reduce(
-    //         function (t, s) {
-    //             return parseInt(t) + parseInt(s);
-    //         }
-    //     );
+        let totalFourYrTuition = fourYrTuition.reduce(
+            function (t, s) {
+                return parseInt(t) + parseInt(s);
+            }
+        );
 
-    //     console.log(totalPrivateTuition)
+        console.log(totalFourYrTuition)
 
-    //     function selectPublic(school) {
-    //         return school.type === 'Public'
-    //     }
-    //     let publicSchools = schoolData.filter(selectPublic)
-    //     console.log(publicSchools)
+        let avg2YrTuition = Math.round(totalTwoYrTuition / totalData)
+        console.log(avg2YrTuition)
 
-    //     let publicTuition = publicSchools.map(d => d.in_state_tuition)
-    //     console.log(publicTuition)
+        let avg4YrTuition = Math.round(totalFourYrTuition / totalData)
+        console.log(avg4YrTuition)
+
+
+
+        var ctx = document.getElementById('myChart4').getContext('2d');
+        var chartjs = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+    
+            // The data for our dataset
+            data: {
+                labels: ['4 Year & 2 Year'],
+                datasets: [{
+                    label: '4 Year',
+                    // type: 'bar',
+                    backgroundColor: '#4B0082',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'green',
+                    data: [totalFourYrColleges],
+                    order: 1
+                },
+                {
+                    label: '2 Year',
+                    // type: 'bar',
+                    backgroundColor: '#F0E68C',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'red',
+                    data: [totalTwoYrColleges],
+                    order: 2
+                },
+                ]
+            },
+    
+    
+            // Configuration options go here
+            options: {
+                tooltips: {
+                    mode: 'index',
+                },
+                title: {
+                    display: true,
+                    text: 'Number of 4 Year & 2 Year Schools',
+                    fontSize: 15
+                },
+                legend: {
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 10,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+    
+            }
+        });
+
+        var ctx = document.getElementById('myChart5').getContext('2d');
+        var chartjs = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+    
+            // The data for our dataset
+            data: {
+                labels: ['4 Year & 2 Year'],
+                datasets: [{
+                    label: '4 Year',
+                    // type: 'bar',
+                    backgroundColor: '#800000',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'green',
+                    data: [avg4YrTuition],
+                    order: 1
+                },
+                {
+                    label: '2 Year',
+                    // type: 'bar',
+                    backgroundColor: '#66CDAA',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'red',
+                    data: [avg2YrTuition],
+                    order: 2
+                },
+                ]
+            },
+    
+    
+            // Configuration options go here
+            options: {
+                tooltips: {
+                    mode: 'index',
+                },
+                title: {
+                    display: true,
+                    text: 'Avg Cost of In-State Tuition for 4 Year & 2 Year Schools',
+                    fontSize: 15
+                },
+                legend: {
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 10,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+    
+            }
+        });
+
+        let total2YrTuition = twoYrSchools.map(d => d.in_state_total)
+        console.log(total2YrTuition)
+
+        let totalCost2YrTuition = parseInt(total2YrTuition)
+        console.log(totalCost2YrTuition)
+
+        let totalAvg2YrTuition = Math.round(totalCost2YrTuition / totalData)
+        console.log(totalAvg2YrTuition)
+
+        let total4YrTuition = fourYrSchools.map(d => d.in_state_total)
+        console.log(total4YrTuition)
 
     //     //syntax: array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
-    //     let totalPublicTuition = publicTuition.reduce(
-    //         function (t, s) {
-    //             return parseInt(t) + parseInt(s);
-    //         }
-    //     );
+        let totalCostFourYrTuition = total4YrTuition.reduce(
+            function (t, s) {
+                return parseInt(t) + parseInt(s);
+            }
+        );
+        console.log(totalCostFourYrTuition)
 
-    //     console.log(totalPublicTuition)
+        let totalAvg4YrTuition = Math.round(totalCostFourYrTuition / totalData)
+        console.log(totalAvg4YrTuition)
 
-    //     let avgPrivateTuition = Math.round(totalPrivateTuition / totalData)
-    //     console.log(avgPrivateTuition)
+        var ctx = document.getElementById('myChart6').getContext('2d');
+        var chartjs = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+    
+            // The data for our dataset
+            data: {
+                labels: ['4 Year & 2 Year'],
+                datasets: [{
+                    label: '4 Year',
+                    // type: 'bar',
+                    backgroundColor: '#FF4500',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'green',
+                    data: [totalAvg4YrTuition, 45500],
+                    order: 1
+                },
+                {
+                    label: '2 Year',
+                    // type: 'bar',
+                    backgroundColor: '#6B8E23',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'red',
+                    data: [totalAvg2YrTuition],
+                    order: 2
+                },
+                ]
+            },
+    
+    
+            // Configuration options go here
+            options: {
+                tooltips: {
+                    mode: 'index',
+                },
+                title: {
+                    display: true,
+                    text: 'Avg Total Cost of In-State Tuition for 4 Year & 2 Year Schools',
+                    fontSize: 15
+                },
+                legend: {
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 10,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+    
+            }
+        });
 
-    //     let avgPublicTuition = Math.round(totalPublicTuition / totalData)
-    //     console.log(avgPublicTuition)
+
+
+
 
 })
