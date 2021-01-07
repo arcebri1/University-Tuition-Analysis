@@ -20,6 +20,14 @@ let svg = d3
 let chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+//appending x axis
+let xAxis = chartGroup.append("g")
+    .attr("transform", `translate(0,${height})`);
+
+//appending y axis
+let yAxis = chartGroup.append("g");
+    
+
 //setting initial parameters for x axis
 let chosenYAxis = "early_career_pay";
 let chosenXAxis = "out_of_state_tuition"
@@ -65,25 +73,23 @@ function renderXAxes(newXScale, xAxis) {
 }
 
 //function to update circle group with new data points
-function  renderCircles(data, circlesGroup, newYScale, chosenYAxis, newXScale, chosenXAxis) {
-    let tuitionSelection = d3.select("#select-bubble-dataset").property("value")
-    console.log(tuitionSelection)
-    let filteredData = data.filter(s => s.out_of_state_tuition > 30000)
+function  renderCircles(data, newYScale, chosenYAxis, newXScale, chosenXAxis) {
     
-    const u = circlesGroup
-        .data(filteredData)
+    const circlesGroup = chartGroup.selectAll("circle")
+        .data(data)
         
-    u.enter()
+    const newCircles = circlesGroup.enter()
         .append("circle")
-        .merge(u)
+        .merge(circlesGroup)
         .attr("r", 8)
         .classed("university-circle", true)
         .attr("cy", d => newYScale(d[chosenYAxis]))
         .attr("cx", d => newXScale(d[chosenXAxis]));
 
-    u.exit().remove();
-        
-    return circlesGroup;
+    circlesGroup.exit().remove();
+
+    updatetoolTip(chosenYAxis, newCircles);
+
 }
 
 //function to update circles group with new tooltip
@@ -120,6 +126,18 @@ function updatetoolTip(chosenYAxis, circlesGroup) {
     return circlesGroup;
 }
 
+function renderNewChart(data){
+
+    yLinearScale = yScale(data, chosenYAxis);
+    renderAxes(yLinearScale, yAxis);
+
+    xLinearScale = xScale(data, chosenXAxis);
+    renderXAxes(xLinearScale, xAxis);
+
+    renderCircles(data, yLinearScale, chosenYAxis, xLinearScale, chosenXAxis);
+
+}
+
 //reading in the csv data
 d3.csv("./datasets/merged_data.csv").then(function(data, err) {
     if (err) throw err;
@@ -132,40 +150,10 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
         data.Acceptance_Rate = +data.Acceptance_Rate
     });
 
-    //set the yLinearScale using the function above
-    //inital parameter set to "early career pay" through chosenYAxis variable
-    let yLinearScale = yScale(data, chosenYAxis);
-
-    let xLinearScale = xScale(data, chosenXAxis);
-
-    //create intial axis functions
-    let bottomAxis = d3.axisBottom(xLinearScale);
-    let leftAxis = d3.axisLeft(yLinearScale);
-
-    //appending x axis
-    let xAxis = chartGroup.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(bottomAxis);
-
-    //appending y axis
-    let yAxis = chartGroup.append("g")
-        .call(leftAxis);
-
-    //appending initial circles
-    var circlesGroup = chartGroup.selectAll("circle")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("cx", d => xLinearScale(d[chosenXAxis]))
-        .attr("cy", d => yLinearScale(d[chosenYAxis]))
-        .attr("r", 8)
-        .classed("university-circle", true)
-    
+    renderNewChart(data);
 
     //create group for the two y-axis labels, center the text and push it away from the y axis
     let labelsGroup = chartGroup.append("g")
-        //.attr("transform", "rotate(-90)")
-        // .attr("dy", "1em")
         .classed("aText", true);
 
     //create two y-axis labels for selecting your dataset (pay, graduation rate)
@@ -193,9 +181,6 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
         .classed("aText", true)
         .text("Yearly Out of State Tuition")
 
-    //calling the updateToolTip function
-    var circlesGroup = updatetoolTip(chosenYAxis, circlesGroup);
-
 
     //creating an event listener for the yaxis
     labelsGroup.selectAll("text")
@@ -206,14 +191,8 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
             if (selectionValue !== chosenYAxis) {
                 chosenYAxis = selectionValue;
 
-                yLinearScale = yScale(data, chosenYAxis);
-
-                yAxis = renderAxes(yLinearScale, yAxis);
-
-                circlesGroup = renderCircles(data, circlesGroup, yLinearScale, chosenYAxis, xLinearScale, chosenXAxis);
-
-                circlesGroup = updatetoolTip(chosenYAxis, circlesGroup);
-
+                renderNewChart(data)
+                
                 if(chosenYAxis === "early_career_pay") {
                     payLabel
                         .classed("active", true)
