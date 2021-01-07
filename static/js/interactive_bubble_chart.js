@@ -26,7 +26,8 @@ let xAxis = chartGroup.append("g")
 
 //appending y axis
 let yAxis = chartGroup.append("g");
-    
+
+let chartData = null;
 
 //setting initial parameters for x axis
 let chosenYAxis = "early_career_pay";
@@ -126,21 +127,24 @@ function updatetoolTip(chosenYAxis, circlesGroup) {
     return circlesGroup;
 }
 
-function renderNewChart(data){
+function renderNewChart(){
 
-    yLinearScale = yScale(data, chosenYAxis);
+    yLinearScale = yScale(chartData, chosenYAxis);
     renderAxes(yLinearScale, yAxis);
 
-    xLinearScale = xScale(data, chosenXAxis);
+    xLinearScale = xScale(chartData, chosenXAxis);
     renderXAxes(xLinearScale, xAxis);
 
-    renderCircles(data, yLinearScale, chosenYAxis, xLinearScale, chosenXAxis);
+    renderCircles(chartData, yLinearScale, chosenYAxis, xLinearScale, chosenXAxis);
 
 }
 
 //reading in the csv data
 d3.csv("./datasets/merged_data.csv").then(function(data, err) {
     if (err) throw err;
+
+    // show all data by default
+    chartData = data;
 
     //changing all required strings to int
     data.forEach(function(data) {
@@ -150,7 +154,7 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
         data.Acceptance_Rate = +data.Acceptance_Rate
     });
 
-    renderNewChart(data);
+    renderNewChart();
 
     //create group for the two y-axis labels, center the text and push it away from the y axis
     let labelsGroup = chartGroup.append("g")
@@ -180,7 +184,33 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
         .attr("transform", `translate(${width/2}, ${height+40})`)
         .classed("aText", true)
         .text("Yearly Out of State Tuition")
+    
+    //event listener for the X axis
+    d3.select("#select-bubble-dataset")
+        .on("change", function() {
+            let dropdownValue = d3.select(this).node().value;
 
+            console.log(dropdownValue);
+
+            if (dropdownValue === "under-25k"){
+                chartData = data.filter(d => d.out_of_state_tuition <= 25000)
+            }
+            else if (dropdownValue === "25k-40k") {
+                chartData = data.filter(d => d.out_of_state_tuition >= 25000 && d.out_of_state_tuition <= 40000)
+            }
+            else if (dropdownValue === "40k-50k") {
+                chartData = data.filter(d => d.out_of_state_tuition >= 40000 && d.out_of_state_tuition <= 50000)
+            }
+            //else dropdownValue = +50k
+            else if (dropdownValue === "50k+") {
+                chartData = data.filter(d => d.out_of_state_tuition >= 50000)
+            }
+            else {
+                chartData = data;
+            }
+
+            renderNewChart(chartData);
+        });
 
     //creating an event listener for the yaxis
     labelsGroup.selectAll("text")
@@ -191,7 +221,7 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
             if (selectionValue !== chosenYAxis) {
                 chosenYAxis = selectionValue;
 
-                renderNewChart(data)
+                renderNewChart()
                 
                 if(chosenYAxis === "early_career_pay") {
                     payLabel
@@ -227,7 +257,7 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
                         .classed("inactive", true);
                 };
             };
-        });  
+        });
 }).catch(function(error) {
     console.log(error);
 });
