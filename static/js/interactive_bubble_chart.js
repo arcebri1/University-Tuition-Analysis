@@ -5,7 +5,7 @@ let margin = {
     top: 20,
     right: 40,
     bottom: 120,
-    left: 100
+    left: 150
 };
 
 let width = svgWidth - margin.right - margin.left;
@@ -22,6 +22,7 @@ let chartGroup = svg.append("g")
 
 //setting initial parameters for x axis
 let chosenYAxis = "early_career_pay";
+let chosenXAxis = "out_of_state_tuition"
 
 //function to update yscale-variable upon user axis-label-click
 function yScale(data, chosenYAxis) {
@@ -34,7 +35,17 @@ function yScale(data, chosenYAxis) {
     return yLinearScale;
 }
 
-//function used to update yAxis-variable upon user-axis-click 
+//function to update the xscale variable upon user axis-label-click
+function xScale(data, chosenXAxis) {
+    let xLinearScale = d3.scaleLinear()
+        .domain([d3.min(data, d =>d[chosenXAxis]),
+        d3.max(data, d => d[chosenXAxis])
+        ])
+        .range([0,width]);
+    return xLinearScale;
+}
+
+//functions used to update yAxis-variable and x-axis-variable upon user-axis-click 
 function renderAxes(newYScale, yAxis) {
     let leftAxis = d3.axisLeft(newYScale);
 
@@ -44,11 +55,34 @@ function renderAxes(newYScale, yAxis) {
     return yAxis;
 }
 
-//function to update circle group with a transition to new circles
-function renderCircles(circlesGroup, newYScale, chosenYAxis) {
-    circlesGroup.transition()
+function renderXAxes(newXScale, xAxis) {
+    let bottomAxis = d3.axisBottom(newXScale);
+
+    xAxis.transition()
         .duration(1000)
-        .attr("cy", d => newYScale(d[chosenYAxis]));
+        .call(bottomAxis);
+    return xAxis;
+}
+
+//function to update circle group with new data points
+function  renderCircles(data, circlesGroup, newYScale, chosenYAxis, newXScale, chosenXAxis) {
+    let tuitionSelection = d3.select("#select-bubble-dataset").property("value")
+    console.log(tuitionSelection)
+    let filteredData = data.filter(s => s.out_of_state_tuition > 30000)
+    
+    const u = circlesGroup
+        .data(filteredData)
+        
+    u.enter()
+        .append("circle")
+        .merge(u)
+        .attr("r", 8)
+        .classed("university-circle", true)
+        .attr("cy", d => newYScale(d[chosenYAxis]))
+        .attr("cx", d => newXScale(d[chosenXAxis]));
+
+    u.exit().remove();
+        
     return circlesGroup;
 }
 
@@ -59,6 +93,8 @@ function updatetoolTip(chosenYAxis, circlesGroup) {
     if (chosenYAxis === "early_career_pay") {
         label = "Early Career Pay";
     }
+    else if (chosenYAxis === "Acceptance_Rate")
+        label = "Acceptance Rate";
     else {
         label = "Graduation Rate";
     }
@@ -67,7 +103,9 @@ function updatetoolTip(chosenYAxis, circlesGroup) {
         .attr("class","d3-tip")
         .offset([80,-60])
         .html(function(d) {
-            return `<strong>${d.name_x}</strong><br>${label}: ${d[chosenYAxis]}`;
+            return `<strong>${d.name_x}</strong>
+            <br>${label}: ${d[chosenYAxis]}
+            <br>Yearly Tuition: ${d.out_of_state_tuition}`;
         });
 
     circlesGroup.call(toolTip);
@@ -88,20 +126,17 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
 
     //changing all required strings to int
     data.forEach(function(data) {
-        data.out_of_state_total = +data.out_of_state_total;
+        data.out_of_state_tuition = +data.out_of_state_tuition;
         data.early_career_pay = +data.early_career_pay;
         data.Grad_Rate = +data.Grad_Rate;
+        data.Acceptance_Rate = +data.Acceptance_Rate
     });
 
     //set the yLinearScale using the function above
     //inital parameter set to "early career pay" through chosenYAxis variable
     let yLinearScale = yScale(data, chosenYAxis);
 
-
-    let xLinearScale = d3.scaleLinear()
-        .domain([d3.min(data, d=> d.out_of_state_total)*.8,
-            d3.max(data, d => d.out_of_state_total)*1.1])
-        .range([0, width]);
+    let xLinearScale = xScale(data, chosenXAxis);
 
     //create intial axis functions
     let bottomAxis = d3.axisBottom(xLinearScale);
@@ -121,7 +156,7 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
         .data(data)
         .enter()
         .append("circle")
-        .attr("cx", d => xLinearScale(d.out_of_state_total))
+        .attr("cx", d => xLinearScale(d[chosenXAxis]))
         .attr("cy", d => yLinearScale(d[chosenYAxis]))
         .attr("r", 8)
         .classed("university-circle", true)
@@ -136,21 +171,27 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
     //create two y-axis labels for selecting your dataset (pay, graduation rate)
     let payLabel = labelsGroup.append("text")
         .attr("value", "early_career_pay")
-        .attr("transform", `translate(-70, ${height/2}) rotate(-90)`)
+        .attr("transform", `translate(-90, ${height/2}) rotate(-90)`)
         .classed("active", true)
         .text("Early Career Pay")
 
     let gradRateLabel = labelsGroup.append("text")
         .attr("value", "Grad_Rate")
-        .attr("transform", `translate(-50,${height/2}) rotate(-90)`)
+        .attr("transform", `translate(-70,${height/2}) rotate(-90)`)
         .classed("inactive", true)
-        .text("Graduation Rate")  
+        .text("Graduation Rate")
+        
+    let acceptanceLabel = labelsGroup.append("text")
+        .attr("value", "Acceptance_Rate")
+        .attr("transform", `translate(-50, ${height/2}) rotate(-90)`)
+        .classed("inactive", true)
+        .text("Acceptance Rate")
         
     //append the x axis text
     chartGroup.append("text")
         .attr("transform", `translate(${width/2}, ${height+40})`)
         .classed("aText", true)
-        .text("Total Out Of State Fees")
+        .text("Yearly Out of State Tuition")
 
     //calling the updateToolTip function
     var circlesGroup = updatetoolTip(chosenYAxis, circlesGroup);
@@ -159,6 +200,7 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
     //creating an event listener for the yaxis
     labelsGroup.selectAll("text")
         .on("click", function() {
+           
             let selectionValue = d3.select(this).attr("value");
             
             if (selectionValue !== chosenYAxis) {
@@ -168,7 +210,7 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
 
                 yAxis = renderAxes(yLinearScale, yAxis);
 
-                circlesGroup = renderCircles(circlesGroup, yLinearScale, chosenYAxis);
+                circlesGroup = renderCircles(data, circlesGroup, yLinearScale, chosenYAxis, xLinearScale, chosenXAxis);
 
                 circlesGroup = updatetoolTip(chosenYAxis, circlesGroup);
 
@@ -179,6 +221,20 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
                     gradRateLabel
                         .classed("inactive", true)
                         .classed("active", false);
+                    acceptanceLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                }
+                else if (chosenYAxis === "Acceptance_Rate") {
+                    gradRateLabel
+                        .classed("inactive", true)
+                        .classed("active", false);
+                    payLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    acceptanceLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
                 }
                 else {
                     payLabel
@@ -187,6 +243,9 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
                     gradRateLabel
                         .classed("inactive", false)
                         .classed("active", true);
+                    acceptanceLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
                 };
             };
         });  

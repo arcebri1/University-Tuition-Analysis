@@ -7,7 +7,15 @@
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
 </head>
 <body>
+    <select id="select-bubble-dataset">
+        <option value="all-schools">All Schools</option>
+        <option value="under-25k">Under $25k</option>
+        <option value="25k-40k">$25k-$40k</option>
+        <option value="40k-50k">$40k-$50k</option>
+        <option value="50k+">$50+</option>
+      </select>
     <div id="bubble_chart"></div>
+    
     <script src="https://d3js.org/d3.v5.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
 	<script type="text/javascript" src="./static/js/interactive_bubble_chart.js"></script>
