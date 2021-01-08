@@ -139,19 +139,18 @@ function renderNewChart(){
 
 }
 
-//reading in the csv data
-d3.csv("./datasets/merged_data.csv").then(function(data, err) {
+//reading in the json data
+d3.json("/merged_data").then(function(data, err) {
     if (err) throw err;
 
     // show all data by default
     chartData = data;
 
-    //changing all required strings to int
+    //creating acceptance rate
+    //for every data point, we're creating a new acceptance rate value
+    //this value is only available on this page, it's not added to the original json
     data.forEach(function(data) {
-        data.out_of_state_tuition = +data.out_of_state_tuition;
-        data.early_career_pay = +data.early_career_pay;
-        data.Grad_Rate = +data.Grad_Rate;
-        data.Acceptance_Rate = +data.Acceptance_Rate
+        data.Acceptance_Rate = data.Accept / data.Apps
     });
 
     renderNewChart();
@@ -168,7 +167,7 @@ d3.csv("./datasets/merged_data.csv").then(function(data, err) {
         .text("Early Career Pay")
 
     let gradRateLabel = labelsGroup.append("text")
-        .attr("value", "Grad_Rate")
+        .attr("value", "Grad.Rate")
         .attr("transform", `translate(-70,${height/2}) rotate(-90)`)
         .classed("inactive", true)
         .text("Graduation Rate")
