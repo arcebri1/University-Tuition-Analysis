@@ -1,5 +1,7 @@
+// console.log("Testing")
 
-d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
+
+d3.csv("/datasets/merged_data.csv").then(function (schoolData) {
 
     let inStateTuition = 'in_state_tuition';
 
@@ -17,7 +19,7 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
 
     });
 
-    console.log([privates, publics])
+    // console.log([privates, publics])
 
     let privateSum = privates.length
     console.log(privateSum)
@@ -27,6 +29,8 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
 
     let totalData = schoolData.length
     console.log(totalData)
+
+    //IN & OUT STATE AVG TUITION FOR PRIVATE AND PUBLIC
 
     function selectPrivate(school) {
         return school.type === 'Private'
@@ -120,14 +124,14 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
     let outStateAvgPrivateTuition = Math.round(totalOutStatePrivateTuition / totalData)
     console.log(outStateAvgPrivateTuition)
 
-    let totalOutStateAvgPrivateTuition = Math.round(totalOutStatePrivTuition / totalData)
-    console.log(totalOutStateAvgPrivateTuition)
+    // let totalOutStateAvgPrivateTuition = Math.round(totalOutStatePrivTuition / totalData)
+    // console.log(totalOutStateAvgPrivateTuition)
 
     let outStateAvgPublicTuition = Math.round(sumOutStatePublicTuition / totalData)
     console.log(outStateAvgPublicTuition)
 
-    let totalOutStateAvgPublicTuition = Math.round(totalSumOutStatePublicTuition / totalData)
-    console.log(totalOutStateAvgPublicTuition)
+    // let totalOutStateAvgPublicTuition = Math.round(totalSumOutStatePublicTuition / totalData)
+    // console.log(totalOutStateAvgPublicTuition)
     
 
 
@@ -287,65 +291,65 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
     console.log(totalAvgPublicTuition)
 
 
-    var ctx = document.getElementById('myChart3').getContext('2d');
-    var chartjs = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'bar',
+    // var ctx = document.getElementById('myChart3').getContext('2d');
+    // var chartjs = new Chart(ctx, {
+    //     // The type of chart we want to create
+    //     type: 'bar',
 
-        // The data for our dataset
-        data: {
-            labels: ['In-State', 'Out-State'],
-            datasets: [{
-                label: 'Private',
-                // type: 'bar',
-                backgroundColor: '#2F4F4F',
-                borderColor: 'black',
-                borderWidth: 1,
-                hoverBackgroundColor: 'green',
-                data: [totalAvgPrivateTuition, totalOutStateAvgPrivateTuition],
-                order: 1
-            },
-            {
-                label: 'Public',
-                // type: 'bar',
-                backgroundColor: '#E9967A',
-                borderColor: 'black',
-                borderWidth: 1,
-                hoverBackgroundColor: 'red',
-                data: [totalAvgPublicTuition, totalOutStateAvgPublicTuition],
-                order: 2
-            },
-            ]
-        },
+    //     // The data for our dataset
+    //     data: {
+    //         labels: ['In-State', 'Out-State'],
+    //         datasets: [{
+    //             label: 'Private',
+    //             // type: 'bar',
+    //             backgroundColor: '#2F4F4F',
+    //             borderColor: 'black',
+    //             borderWidth: 1,
+    //             hoverBackgroundColor: 'green',
+    //             data: [totalAvgPrivateTuition, totalOutStateAvgPrivateTuition],
+    //             order: 1
+    //         },
+    //         {
+    //             label: 'Public',
+    //             // type: 'bar',
+    //             backgroundColor: '#E9967A',
+    //             borderColor: 'black',
+    //             borderWidth: 1,
+    //             hoverBackgroundColor: 'red',
+    //             data: [totalAvgPublicTuition, totalOutStateAvgPublicTuition],
+    //             order: 2
+    //         },
+    //         ]
+    //     },
 
 
-        // Configuration options go here
-        options: {
-            tooltips: {
-                mode: 'index',
-            },
-            title: {
-                display: true,
-                text: 'Avg Total Cost of In-State & Out-State Tuition for Public & Private Schools',
-                fontSize: 15
-            },
-            legend: {
-                position: 'right',
-                labels: {
-                    fontColor: '#000'
-                }
-            },
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 10,
-                    bottom: 0,
-                    top: 0
-                }
-            },
+    //     // Configuration options go here
+    //     options: {
+    //         tooltips: {
+    //             mode: 'index',
+    //         },
+    //         title: {
+    //             display: true,
+    //             text: 'Avg Total Cost of In-State & Out-State Tuition for Public & Private Schools',
+    //             fontSize: 15
+    //         },
+    //         legend: {
+    //             position: 'right',
+    //             labels: {
+    //                 fontColor: '#000'
+    //             }
+    //         },
+    //         layout: {
+    //             padding: {
+    //                 left: 10,
+    //                 right: 10,
+    //                 bottom: 0,
+    //                 top: 0
+    //             }
+    //         },
 
-        }
-    });
+    //     }
+    // });
 
     function select2Yr(school) {
         return school.degree_length === '2 Year'
@@ -398,125 +402,125 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
 
 
 
-        var ctx = document.getElementById('myChart4').getContext('2d');
-        var chartjs = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'bar',
+        // var ctx = document.getElementById('myChart4').getContext('2d');
+        // var chartjs = new Chart(ctx, {
+        //     // The type of chart we want to create
+        //     type: 'bar',
     
-            // The data for our dataset
-            data: {
-                labels: ['4 Year & 2 Year'],
-                datasets: [{
-                    label: '4 Year',
-                    // type: 'bar',
-                    backgroundColor: '#4B0082',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'green',
-                    data: [totalFourYrColleges],
-                    order: 1
-                },
-                {
-                    label: '2 Year',
-                    // type: 'bar',
-                    backgroundColor: '#F0E68C',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'red',
-                    data: [totalTwoYrColleges],
-                    order: 2
-                },
-                ]
-            },
+        //     // The data for our dataset
+        //     data: {
+        //         labels: ['4 Year & 2 Year'],
+        //         datasets: [{
+        //             label: '4 Year',
+        //             // type: 'bar',
+        //             backgroundColor: '#4B0082',
+        //             borderColor: 'black',
+        //             borderWidth: 1,
+        //             hoverBackgroundColor: 'green',
+        //             data: [totalFourYrColleges],
+        //             order: 1
+        //         },
+        //         {
+        //             label: '2 Year',
+        //             // type: 'bar',
+        //             backgroundColor: '#F0E68C',
+        //             borderColor: 'black',
+        //             borderWidth: 1,
+        //             hoverBackgroundColor: 'red',
+        //             data: [totalTwoYrColleges],
+        //             order: 2
+        //         },
+        //         ]
+        //     },
     
     
-            // Configuration options go here
-            options: {
-                tooltips: {
-                    mode: 'index',
-                },
-                title: {
-                    display: true,
-                    text: 'Number of 4 Year & 2 Year Schools',
-                    fontSize: 15
-                },
-                legend: {
-                    position: 'right',
-                    labels: {
-                        fontColor: '#000'
-                    }
-                },
-                layout: {
-                    padding: {
-                        left: 10,
-                        right: 10,
-                        bottom: 0,
-                        top: 0
-                    }
-                },
+        //     // Configuration options go here
+        //     options: {
+        //         tooltips: {
+        //             mode: 'index',
+        //         },
+        //         title: {
+        //             display: true,
+        //             text: 'Number of 4 Year & 2 Year Schools',
+        //             fontSize: 15
+        //         },
+        //         legend: {
+        //             position: 'right',
+        //             labels: {
+        //                 fontColor: '#000'
+        //             }
+        //         },
+        //         layout: {
+        //             padding: {
+        //                 left: 10,
+        //                 right: 10,
+        //                 bottom: 0,
+        //                 top: 0
+        //             }
+        //         },
     
-            }
-        });
+        //     }
+        // });
 
-        var ctx = document.getElementById('myChart5').getContext('2d');
-        var chartjs = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'bar',
+        // var ctx = document.getElementById('myChart5').getContext('2d');
+        // var chartjs = new Chart(ctx, {
+        //     // The type of chart we want to create
+        //     type: 'bar',
     
-            // The data for our dataset
-            data: {
-                labels: ['4 Year & 2 Year'],
-                datasets: [{
-                    label: '4 Year',
-                    // type: 'bar',
-                    backgroundColor: '#800000',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'green',
-                    data: [avg4YrTuition],
-                    order: 1
-                },
-                {
-                    label: '2 Year',
-                    // type: 'bar',
-                    backgroundColor: '#66CDAA',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'red',
-                    data: [avg2YrTuition],
-                    order: 2
-                },
-                ]
-            },
+        //     // The data for our dataset
+        //     data: {
+        //         labels: ['4 Year & 2 Year'],
+        //         datasets: [{
+        //             label: '4 Year',
+        //             // type: 'bar',
+        //             backgroundColor: '#800000',
+        //             borderColor: 'black',
+        //             borderWidth: 1,
+        //             hoverBackgroundColor: 'green',
+        //             data: [avg4YrTuition],
+        //             order: 1
+        //         },
+        //         {
+        //             label: '2 Year',
+        //             // type: 'bar',
+        //             backgroundColor: '#66CDAA',
+        //             borderColor: 'black',
+        //             borderWidth: 1,
+        //             hoverBackgroundColor: 'red',
+        //             data: [avg2YrTuition],
+        //             order: 2
+        //         },
+        //         ]
+        //     },
     
     
-            // Configuration options go here
-            options: {
-                tooltips: {
-                    mode: 'index',
-                },
-                title: {
-                    display: true,
-                    text: 'Avg Cost of In-State Tuition for 4 Year & 2 Year Schools',
-                    fontSize: 15
-                },
-                legend: {
-                    position: 'right',
-                    labels: {
-                        fontColor: '#000'
-                    }
-                },
-                layout: {
-                    padding: {
-                        left: 10,
-                        right: 10,
-                        bottom: 0,
-                        top: 0
-                    }
-                },
+        //     // Configuration options go here
+        //     options: {
+        //         tooltips: {
+        //             mode: 'index',
+        //         },
+        //         title: {
+        //             display: true,
+        //             text: 'Avg Cost of In-State Tuition for 4 Year & 2 Year Schools',
+        //             fontSize: 15
+        //         },
+        //         legend: {
+        //             position: 'right',
+        //             labels: {
+        //                 fontColor: '#000'
+        //             }
+        //         },
+        //         layout: {
+        //             padding: {
+        //                 left: 10,
+        //                 right: 10,
+        //                 bottom: 0,
+        //                 top: 0
+        //             }
+        //         },
     
-            }
-        });
+        //     }
+        // });
 
         let total2YrTuition = twoYrSchools.map(d => d.in_state_total)
         console.log(total2YrTuition)
@@ -541,65 +545,65 @@ d3.csv("datasets/mergednoindex_data.csv").then(function (schoolData) {
         let totalAvg4YrTuition = Math.round(totalCostFourYrTuition / totalData)
         console.log(totalAvg4YrTuition)
 
-        var ctx = document.getElementById('myChart6').getContext('2d');
-        var chartjs = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'bar',
+        // var ctx = document.getElementById('myChart6').getContext('2d');
+        // var chartjs = new Chart(ctx, {
+        //     // The type of chart we want to create
+        //     type: 'bar',
     
-            // The data for our dataset
-            data: {
-                labels: ['4 Year & 2 Year'],
-                datasets: [{
-                    label: '4 Year',
-                    // type: 'bar',
-                    backgroundColor: '#FF4500',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'green',
-                    data: [totalAvg4YrTuition, 45500],
-                    order: 1
-                },
-                {
-                    label: '2 Year',
-                    // type: 'bar',
-                    backgroundColor: '#6B8E23',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'red',
-                    data: [totalAvg2YrTuition],
-                    order: 2
-                },
-                ]
-            },
+        //     // The data for our dataset
+        //     data: {
+        //         labels: ['4 Year & 2 Year'],
+        //         datasets: [{
+        //             label: '4 Year',
+        //             // type: 'bar',
+        //             backgroundColor: '#FF4500',
+        //             borderColor: 'black',
+        //             borderWidth: 1,
+        //             hoverBackgroundColor: 'green',
+        //             data: [totalAvg4YrTuition, 45500],
+        //             order: 1
+        //         },
+        //         {
+        //             label: '2 Year',
+        //             // type: 'bar',
+        //             backgroundColor: '#6B8E23',
+        //             borderColor: 'black',
+        //             borderWidth: 1,
+        //             hoverBackgroundColor: 'red',
+        //             data: [totalAvg2YrTuition],
+        //             order: 2
+        //         },
+        //         ]
+        //     },
     
     
-            // Configuration options go here
-            options: {
-                tooltips: {
-                    mode: 'index',
-                },
-                title: {
-                    display: true,
-                    text: 'Avg Total Cost of In-State Tuition for 4 Year & 2 Year Schools',
-                    fontSize: 15
-                },
-                legend: {
-                    position: 'right',
-                    labels: {
-                        fontColor: '#000'
-                    }
-                },
-                layout: {
-                    padding: {
-                        left: 10,
-                        right: 10,
-                        bottom: 0,
-                        top: 0
-                    }
-                },
+        //     // Configuration options go here
+        //     options: {
+        //         tooltips: {
+        //             mode: 'index',
+        //         },
+        //         title: {
+        //             display: true,
+        //             text: 'Avg Total Cost of In-State Tuition for 4 Year & 2 Year Schools',
+        //             fontSize: 15
+        //         },
+        //         legend: {
+        //             position: 'right',
+        //             labels: {
+        //                 fontColor: '#000'
+        //             }
+        //         },
+        //         layout: {
+        //             padding: {
+        //                 left: 10,
+        //                 right: 10,
+        //                 bottom: 0,
+        //                 top: 0
+        //             }
+        //         },
     
-            }
-        });
+        //     }
+        // });
 
 
 
