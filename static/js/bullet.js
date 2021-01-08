@@ -1,5 +1,7 @@
 function buildMetadata() {
   d3.csv("./datasets/merged_data.csv").then(function(schoolData) {
+    
+    // undefined?
     var metadata = [];
     console.log(metadata);
     
@@ -16,6 +18,7 @@ function buildMetadata() {
       out_state_tuition = data.out_of_state_total;
         metadata.push(out_state_tuition);
 
+        // dictionary has keys
       var dict = {
         "University": names,
         "Rank": ranks,
@@ -24,7 +27,7 @@ function buildMetadata() {
         "In-State Tuition": in_state_tuition,
         "Out-State Tuition": out_state_tuition
     }
-
+// array without keys, how can I add?
       var test = [
         names,
         ranks,
@@ -39,9 +42,7 @@ function buildMetadata() {
       // Use `.html("") to clear any existing metadata
       PANEL.html("");
   
-      // Use `Object.entries` to add each key and value pair to the panel
-      // Hint: Inside the loop, you will need to use d3 to append new
-      // tags for each key-value in the metadata.
+      // append the Panel
       Object.entries(test).forEach(([key, value]) => {
         PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
       });
