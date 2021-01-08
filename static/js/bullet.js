@@ -1,22 +1,208 @@
-(function() {
+function buildMetadata(school) {
+  d3.csv("./datasets/merged_data.csv").then(function(schoolData) {
+    var metadata = []
+    var resultArray = metadata[0];
+    console.log(result);
+    schoolData.forEach(function(data){
+      names = data.name;
+        metadata.push(names);
+      ranks = data.rank;
+        metadata.push(ranks);
+      apps = data.Apps;
+        metadata.push(apps);
+      accepts = data.Accept;
+        metadata.push(accepts); 
+      in_state_tuition = data.in_state_total;
+      out_state_tuition = data.out_state_total;
 
+      var dict = {
+        "University": names,
+        "Rank": ranks,
+        "Applications Received": apps,
+        "Applications Accepted": accepts,
+        "In-State Tuition": in_state_tuition,
+        "Out-State Tuition": out_state_tuition
+      }
+
+      var PANEL = d3.select("#school-metadata");
+
+      // Use `.html("") to clear any existing metadata
+      PANEL.html("");
+  
+      // Use `Object.entries` to add each key and value pair to the panel
+      // Hint: Inside the loop, you will need to use d3 to append new
+      // tags for each key-value in the metadata.
+      Object.entries(result).forEach(([key, value]) => {
+        PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
+      });
+    })
+  });
+}
+
+function buildCharts(school) {
+  d3.csv("datasets/merged_data.csv").then(function(schoolData) {
+    var names = schoolData.map(school => school.name);
+    var ranks = schoolData.map(school => school.rank);
+    var apps = schoolData.map(school => school.Apps);
+    var accepts = schoolData.map(school => school.Accept);
+    var in_state_tuition = schoolData.map(school => school.in_state_total);
+    var out_state_tuition = schoolData.map(school => school.out_state_total);
+console.log(ranks);
+
+
+    var barData = [
+      {
+        y: names.slice(0,2).reverse(),
+        x: ranks.slice(0,2).reverse(),
+        text: ranks,
+        type: "bar",
+        orientation: "h",
+      }
+    ];
+
+    var barLayout = {
+      title: "Data Visualization",
+      margin: { t: 30, l: 150 }
+    };
+
+    Plotly.newPlot("bar", barData, barLayout);
+  });
+}
+
+function init() {
+  // Grab a reference to the dropdown select element
+  var selector = d3.select("#selDataset");
+
+  // Use the list of sample names to populate the select options
+  d3.csv("datasets/merged_data.csv").then(function(data) {
+    var names = data.map(data => data.name);
+    names.forEach((school) => {
+      selector
+        .append("option")
+        .text(school)
+        .property("value", school);
+    });
+
+    // Use the first sample from the list to build the initial plots
+    var firstSchool = names[0];
+    buildCharts(firstSchool);
+    buildMetadata(firstSchool);
+  });
+}
+
+function optionChanged(newSchool) {
+  // Fetch new data each time a new sample is selected
+  buildCharts(newSchool);
+  buildMetadata(newSchool);
+}
+
+// Initialize the dashboard
+init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
     // Chart design based on the recommendations of Stephen Few. Implementation
     // based on the work of Clint Ivy, Jamie Love, and Jason Davies.
     // http://projects.instantcognition.com/protovis/bulletchart/
+
+(function() {
+  d3.csv("datasets/merged_data.csv").then(function(schoolData) {
+      
+    console.log(data);
+    schoolData.forEach(function(data){
+        names = data.name_x;
+        rank = data.rank;
+        apps = data.Apps;
+        accepts = data.Accept;
+        in_state_tuition = data.in_state_total;
+        out_state_tuition = data.out_state_total;
+        
+    })
     d3.bullet = function() {
       var orient = "left", // TODO top & bottom
           reverse = false,
           duration = 0,
-          ranges = bulletRanges,
+          ranges = rank,
           markers = bulletMarkers,
           measures = bulletMeasures,
           width = 380,
           height = 30,
           tickFormat = null;
-    
+
       // For each small multiple…
       function bullet(g) {
         g.each(function(d, i) {
+          console.log(d)
+          console.log(i)
+          console.log(this)
+          console.log(ranges);
+          console.log(ranges.call)
+          console.log(ranges.call(this,d,i))
+          console.log(markers);
+          console.log(markers.call)
+          console.log(markers.call(this,d,i))
+          console.log(measures);
+          console.log(measures.call)
+          console.log(measures.call(this,d,i))
+
           var rangez = ranges.call(this, d, i).slice().sort(d3.descending),
               markerz = markers.call(this, d, i).slice().sort(d3.descending),
               measurez = measures.call(this, d, i).slice().sort(d3.descending),
@@ -228,14 +414,63 @@
     function bulletTranslate(x) {
       return function(d) {
         return "translate(" + x(d) + ",0)";
-      };
-    }
+      }
+    };
     
     function bulletWidth(x) {
       var x0 = x(0);
       return function(d) {
         return Math.abs(x(d) - x0);
-      };
-    }
-    
-    })();
+      }
+    };
+})();
+
+
+
+/* 
+d3.select("#selDataset").on("change", nameInput);
+
+function nameInput() {
+    d3.csv("datasets/merged_data.csv").then(function(data){
+        var names = data.name_x;
+        var menu = d3.selectAll("#selDataset");
+        for (i = 0; i < names.length; i++) {
+            menu.append("option").text(names[i]).property("value", names[i]);
+        };
+        const firstUni = names[0];
+        buildPlot(firstUni);
+    })
+};
+nameInput();
+
+function init() {
+  // Grab a reference to the dropdown select element
+  var selector = d3.select("#selDataset");
+
+  // Use the list of sample names to populate the select options
+  d3.csv("datasets/merged_data.csv").then(function(data){
+    var schoolNames = data.names_x;
+
+    schoolNames.forEach((school) => {
+      selector
+        .append("option")
+        .text(school)
+        .property("value", school);
+    });
+
+    // Use the first sample from the list to build the initial plots
+    var firstSchool = schoolNames[0];
+    buildCharts(firstSchool);
+    buildMetadata(firstSchool);
+  });
+}
+
+function optionChanged(newSchool) {
+  // Fetch new data each time a new sample is selected
+  buildCharts(newSchool);
+  buildMetadata(newSchool);
+}
+
+// Initialize the dashboard
+init();
+ */
