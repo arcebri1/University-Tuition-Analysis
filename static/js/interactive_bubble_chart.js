@@ -108,7 +108,7 @@ function updatetoolTip(chosenYAxis, circlesGroup) {
 
     let toolTip = d3.tip()
         .attr("class","d3-tip")
-        .offset([80,-60])
+        .offset([-30,-60])
         .html(function(d) {
             return `<strong>${d.name_x}</strong>
             <br>${label}: ${d[chosenYAxis]}

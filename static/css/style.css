@@ -29,3 +29,10 @@ h1 {
     padding-top: 15px;
     color: rgb(17, 10, 58)
 }
+
+.d3-tip {
+    background:white;
+    border-radius: 5px;
+    padding:5px;
+    border: 1px solid gray;
+}
