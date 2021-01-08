@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-md-2">
+        <div class="well">
+          <h5>University:</h5>
+          <select id="selDataset" onchange="optionChanged(this.value)"></select>
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 id="universityChoice" class="panel-title">University Info</h3>
+          </div>
+          <div id="school-metadata" class="panel-body"></div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div id="bar"></div>
+      </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+  <script type="text/javascript" src="static/js/bullet.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Perfect School</title>
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+              <div class="well">
+                <h5>Universities</h5>
+                <select id="selDataset" onchange="optionChanged(this.value)"></select>
+              </div>
+            </div>
+        </div>
+            <div class="col-md-12">
+                <div id="chart">
+                    <button class="first last" onclick="transition()">
+                    Update
+                    </button><p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: auto;
+  padding-top: 40px;
+  position: relative;
+  width: 960px;
+}
+
+button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.bullet { font: 10px sans-serif; }
+.bullet .marker { stroke: #000; stroke-width: 2px; }
+.bullet .tick line { stroke: #666; stroke-width: .5px; }
+.bullet .range.s0 { fill: #eee; }
+.bullet .range.s1 { fill: #ddd; }
+.bullet .range.s2 { fill: #ccc; }
+.bullet .measure.s0 { fill: lightsteelblue; }
+.bullet .measure.s1 { fill: steelblue; }
+.bullet .title { font-size: 14px; font-weight: bold; }
+.bullet .subtitle { fill: #999; }
+
+</style>
+<button>Update</button>
+<script src="https://d3js.org/d3.v5.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+<script type="text/javascript" src="static/js/bullet.js"></script>
+
+<script>
+
+var margin = {top: 5, right: 40, bottom: 20, left: 120},
+    width = 960 - margin.left - margin.right,
+    height = 50 - margin.top - margin.bottom;
+
+var chart = d3.bullet()
+    .width(width)
+    .height(height);
+
+d3.csv("datasets/merged_data.csv").then(function(schoolData) {
+
+  var svg = d3.select("#chart").selectAll("svg")
+      .data(schoolData)
+    .enter().append("svg")
+      .attr("class", "bullet")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .call(chart);
+
+  var title = svg.append("g")
+      .style("text-anchor", "end")
+      .attr("transform", "translate(-6," + height / 2 + ")");
+
+  title.append("text")
+      .attr("class", "title")
+      .text(function(d) { return d.title; });
+
+  title.append("text")
+      .attr("class", "subtitle")
+      .attr("dy", "1em")
+      .text(function(d) { return d.subtitle; });
+
+  d3.selectAll("button").on("click", function() {
+    svg.datum(randomize).call(chart.duration(1000)); // TODO automatic transition
+  });
+});
+
+function randomize(d) {
+  if (!d.randomizer) d.randomizer = randomizer(d);
+  d.ranges = d.ranges.map(d.randomizer);
+  d.markers = d.markers.map(d.randomizer);
+  d.measures = d.measures.map(d.randomizer);
+  return d;
+}
+
+function randomizer(d) {
+  var k = d3.max(d.ranges) * .2;
+  return function(d) {
+    return Math.max(0, d + k * (Math.random() - .5));
+  };
+}
+
+</script>
+
+</body>
+</html> -->
