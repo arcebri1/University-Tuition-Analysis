@@ -1,5 +1,5 @@
 .university-circle {
-    fill: violet;
+    fill: rgb(8, 68, 124);
     stroke: #e3e3e3;
     opacity: .5;
 }
@@ -33,6 +33,7 @@ h1 {
 .d3-tip {
     background:white;
     border-radius: 5px;
+    box-shadow: 3px 3px 3px 3px rgba(0,0,0, 0.2);
     padding:5px;
     border: 1px solid gray;
 }
