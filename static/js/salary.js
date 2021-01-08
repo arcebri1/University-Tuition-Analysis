@@ -155,7 +155,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   }
 ///
 
-d3.csv("tuition_vs_salary.csv").then(function(Tuition_Cost) {
+d3.csv("datasets/tuition_vs_salary.csv").then(function(Tuition_Cost) {
 
     // Step 1: Parse Data/Cast as numbers
     // ==============================
@@ -200,7 +200,7 @@ d3.csv("tuition_vs_salary.csv").then(function(Tuition_Cost) {
   .attr("x", 0)
   .attr("y", 20)
   .attr("value", "hair_length") // value to grab for event listener
-  .text("Tuition Costs ($/year");
+  .text("Tuition Costs ($/year)");
 
   chartGroup.append("text")
   .attr("transform", "rotate(-90)")
@@ -208,7 +208,7 @@ d3.csv("tuition_vs_salary.csv").then(function(Tuition_Cost) {
   .attr("x", 0 - (height / 2) - 50)
   .attr("dy", "1em")
   .classed("axis-text", true)
-  .text("Salary Potentia ($/year)");
+  .text("Salary Potential ($/year)");
 
 
 
