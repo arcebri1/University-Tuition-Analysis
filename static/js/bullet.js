@@ -83,7 +83,7 @@ function buildCharts() {
     var rankData = [
       {
         y: ["Rank"],
-        x: ranks[328],
+        x: [ranks[328]],
         text: names[328],
         type: "bar",
         orientation: "h"
