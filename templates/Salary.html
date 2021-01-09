@@ -3,54 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tuition vs Salary Potential</title>
-    <style>
-    .flex-container {
-        display: flex;
-        justify-content: flex-start;
-        margin-left: 600px;
-        
-      }
-    .flex-container > div {
-
-  margin: 10px;
-  text-align: left;
-  
-      }
-    .flex-container-left {
-        display: flex;
-        justify-content: flex-start;
-        margin-left: 50px;
-    }
-    .flex-container-left > div {
-
-margin: 10px;
-text-align: left;
-    }
-      </style>
+    <title>Find Your Perfect School</title>
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body>
-    <h1>Tuition Costs vs Salary Potential</h1>
-    <div class="flex-container-left">
-        <div><label for="career_stage">Early/Mid-Level Career:</label></div>
-        <select id="career" autocomplete="off">
-            <option value="early_career_pay">Early Career Pay</option>
-            <option value="mid_career_pay">Mid Career Pay</option>
-        </select>
-    </div>
-    <div class="chart">
-    </div>
-    <div class="flex-container">
-        <div><label for="in-out">In-State/Out-of-State:</label></div>
-        <select id="state" autocomplete="off">
-            <option value="in_state_tuition" >In-State-Tuition</option>
-            <option value="out_of_state_tuition" selected>Out-of-State-Tuition</option>
-        </select>
-    </div>
-    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">University Tuition Analysis</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Visualizations
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/">Data Summary</a>
+                <a class="dropdown-item" href="/scatter">Salary Scatter Chart</a>
+                <a class="dropdown-item" href="/bubble">Interactive Bubble Chart</a>
+                <a class="dropdown-item" href="/bullet">Individual School Chart</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <div class="col-lg-12 m-auto">
+            <h1>Tuition Costs vs Salary Potential</h1>
+          </div>
+        </div>  
+        <div class="row justify-content-md-center">
+          <div class="col-lg-12">
+            <div><label for="career_stage">Early/Mid-Level Career:</label></div>
+            <select id="career" autocomplete="off">
+                <option value="early_career_pay">Early Career Pay</option>
+                <option value="mid_career_pay">Mid Career Pay</option>
+            </select>
+          </div>  
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-lg-12">
+            <div class="chart"></div> 
+          </div>     
+        </div>
+        <div class="row">
+          <div class="col-lg-8"></div>
+          <div class="col-lg-4">
+            <div class=""><label for="in-out">In-State/Out-of-State:</label></div>
+            <select id="state" autocomplete="off">
+                <option value="in_state_tuition" >In-State-Tuition</option>
+                <option value="out_of_state_tuition" selected>Out-of-State-Tuition</option>
+            </select>
+          </div>
+        </div>
+      </div>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
     <script type="text/javascript" src="static/js/salary.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
 </body>
 </body>
 </html>
