@@ -1,5 +1,5 @@
 function buildMetadata() {
-  d3.csv("./datasets/merged_data.csv").then(function(schoolData) {
+  d3.csv("datasets/merged_data.csv").then(function(schoolData) {
     
     // undefined?
     var metadata = [];
@@ -43,7 +43,7 @@ function buildMetadata() {
       PANEL.html("");
   
       // append the Panel
-      Object.entries(test).forEach(([key, value]) => {
+      Object.entries(dict).forEach(([key, value]) => {
         PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
       });
     })
@@ -57,46 +57,134 @@ function buildCharts() {
     var apps = schoolData.map(school => school.Apps);
     var accepts = schoolData.map(school => school.Accept);
     var in_state_tuition = schoolData.map(school => school.in_state_total);
-    var out_state_tuition = schoolData.map(school => school.out_of_state_total);
-
+    var tuition = schoolData.map(school => school.out_of_state_total);
+    console.log(ranks);
 // Rank
+    // var rankData = [
+    //   {
+    //     y: ["Rank", "Apps Received", "Apps Accepted", "Tuition"].reverse(),
+    //     x: [ranks[328], apps[328], accepts[328], tuition[328]].reverse(),
+    //     text: names[328],
+    //     type: "bar",
+    //     orientation: "h"
+    //   }
+    // ];
     var rankData = [
       {
-        y: ["Rank", "Apps Received", "Apps Accepted", "Tuition"].reverse(),
-        x: [ranks[328], apps[328], accepts[328], out_state_tuition[328]].reverse(),
+        y: ["Rank"],
+        x: [ranks[328]],
+        text: names[328],
+        type: "bar",
+        orientation: "h"
+      }
+    ];
+    var rankLayout = {
+      autosize: false,
+      width: 1000,
+      height: 300,
+      margin: {
+        l: 50,
+        r: 50,
+        b: 100,
+        t: 100,
+        pad: 4
+      },
+      xaxis: {
+        tickvals: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        tickmode: 'array',
+        automargin: false,
+        titlefont: { size:30 },
+      },
+      title: names[328],
+      margin: { t: 30, l: 310 }
+    };
+
+//Applications Received
+    var appsData = [
+      {
+        y: ["Apps Received"],
+        x: [apps[328]],
+        
         text: names[328],
         type: "bar",
         orientation: "h"
       }
     ];
 
-    var rankLayout = {
-      title: names[328],
+    var acceptLayout = {
+      autosize: false,
+      width: 1000,
+      height: 300,
+      margin: {
+        l: 50,
+        r: 50,
+        b: 100,
+        t: 100,
+        pad: 4
+      },
+      xticks: [3000, 6000, 9000, 12000],
+      title: "",
       margin: { t: 30, l: 310 }
     };
 
-//Applications Received
-    // var appsData = [
-    //   {
-    //     y: names[-1],
-    //     x: apps[0],
-    //     text: apps[0],
-    //     type: "bar",
-    //     orientation: "h"
-    //   }
-    // ];
+    //Applications Accepted
+    var acceptData = [
+      {
+        y: ["Apps Accepted"],
+        x: [accepts[328]],
+        text: names[328],
+        type: "bar",
+        orientation: "h"
+      }
+    ];
 
-    // var appsLayout = {
-    //   title: "Data Visualization",
-    //   margin: { t: 30, l: 310 }
-    // };
+    var appsLayout = {
+      autosize: false,
+      width: 1000,
+      height: 300,
+      margin: {
+        l: 50,
+        r: 50,
+        b: 100,
+        t: 100,
+        pad: 4
+      },
+      title: "",
+      margin: { t: 30, l: 310 }
+    };
 
-    Plotly.newPlot("bar", rankData, rankLayout);
-    // Plotly.newPlot("bar", appsData, appsLayout);
+    //Tuition
+    var tuitionData = [
+      {
+        y: ["Tuition"],
+        x: [tuition[328]],
+        text: names[328],
+        type: "bar",
+        orientation: "h"
+      }
+    ];
+
+    var tuitionLayout = {
+      autosize: false,
+      width: 1000,
+      height: 300,
+      margin: {
+        l: 50,
+        r: 50,
+        b: 100,
+        t: 100,
+        pad: 4
+      },
+      title: "",
+      margin: { t: 30, l: 310 }
+    };
+
+    Plotly.newPlot("bar1", rankData, rankLayout);
+    Plotly.newPlot("bar2", appsData, appsLayout);
+    Plotly.newPlot("bar3", acceptData, acceptLayout);
+    Plotly.newPlot("bar4", tuitionData, tuitionLayout);
   });
 }
-
-
 
 
 
@@ -109,7 +197,7 @@ function init() {
   var selector = d3.select("#selDataset");
 
   // select option
-  d3.csv("datasets/merged_data.csv").then(function(data) {
+  d3.json("/merged_data").then(function(data) {
     var names = data.map(data => data.Name);
     names.forEach((school) => {
       selector
