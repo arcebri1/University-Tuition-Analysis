@@ -168,9 +168,9 @@ d3.json("/tuition_vs_salary").then(function(Tuition_Cost) {
           data.color = "Blue"
       }
       else if(data.type === "Private"){
-            data.color = "Blue"
+            data.color = "Pink"
       }
-      else{data.color = "Blue"}
+      else{data.color = "Red"}
     });
 
       // xLinearScale function above csv import
