@@ -30,7 +30,7 @@ def bullet():
 
 @app.route("/merged_data")
 def read_merged_sql():
-    conn = psycopg2.connect(dbname="project-2", user="postgres", password="Zumatower11!", host="127.0.0.1", port="5432")
+    conn = psycopg2.connect(dbname="project-2", user="postgres", password="postgres", host="127.0.0.1", port="5432")
 
     dataframe = pd.read_sql("SELECT * FROM merged_data", conn)
 
