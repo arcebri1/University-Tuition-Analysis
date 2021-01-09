@@ -37,3 +37,7 @@ h1 {
     padding:5px;
     border: 1px solid gray;
 }
+
+#bar1 {
+  position: center;
+}

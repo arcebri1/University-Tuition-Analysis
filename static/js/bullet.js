@@ -1,44 +1,56 @@
 function buildMetadata() {
-  d3.csv("datasets/merged_data.csv").then(function(schoolData) {
+  d3.json("/merged_data").then(function(data) {
     
     // undefined?
-    var metadata = [];
-    console.log(metadata);
-    
-    schoolData.forEach(function(data){
-      names = data.Name;
+    var metadata = [];    
+    //schoolData.forEach(function(data){
+      // var names = data.name[242];
+      //   metadata.push(names);
+      // var ranks = data.rank[242];
+      //   metadata.push(ranks);
+      // var apps = data.Apps[242];
+      //   metadata.push(apps);
+      // var accepts = data.Accept[242];
+      //   metadata.push(accepts); 
+      // var out_state_tuition = data.out_of_state_total[242];
+      //   metadata.push(out_state_tuition);
+      // var board_cost = data.room_and_board[242];
+
+    data.forEach(function(data){
+      var names = data.name_x;
+ 
         metadata.push(names);
-      ranks = data.rank;
+      var ranks = data.rank;
         metadata.push(ranks);
-      apps = data.Apps;
+      var apps = data.Apps;
         metadata.push(apps);
-      accepts = data.Accept;
+      var accepts = data.Accept;
         metadata.push(accepts); 
-      in_state_tuition = data.in_state_total;
-      out_state_tuition = data.out_of_state_total;
+      var out_state_tuition = data.out_of_state_total;
         metadata.push(out_state_tuition);
+      var board_cost = data.room_and_board;
 
         // dictionary has keys
-      var dict = {
-        "University": names,
-        "Rank": ranks,
-        "Applications Received": apps,
-        "Applications Accepted": accepts,
-        "In-State Tuition": in_state_tuition,
-        "Out-State Tuition": out_state_tuition
-    }
+        var dict = {
+          "University": names,
+          "Rank": ranks,
+          "Applications Received": `$${apps}`,
+          "Applications Accepted": `$${accepts}`,
+          "Out-State Tuition": `$${out_state_tuition}`,
+          "Room & Board Cost": `$${board_cost}`
+      }
 // array without keys, how can I add?
       var test = [
         names,
         ranks,
         apps,
-        accepts,
-        in_state_tuition, 
-        out_state_tuition
+        accepts, 
+        out_state_tuition,
+        board_cost
       ];
 
       var PANEL = d3.select("#school-metadata");
-
+      console.log(names[242]);
       // Use `.html("") to clear any existing metadata
       PANEL.html("");
   
@@ -51,14 +63,13 @@ function buildMetadata() {
 }
 
 function buildCharts() {
-  d3.csv("datasets/merged_data.csv").then(function(schoolData) {
+  d3.json("/merged_data").then(function(schoolData) {
     var names = schoolData.map(school => school.Name);
     var ranks = schoolData.map(school => school.rank);
     var apps = schoolData.map(school => school.Apps);
     var accepts = schoolData.map(school => school.Accept);
-    var in_state_tuition = schoolData.map(school => school.in_state_total);
     var tuition = schoolData.map(school => school.out_of_state_total);
-    console.log(ranks);
+    var board_cost = schoolData.map(school => school.room_and_board);
 // Rank
     // var rankData = [
     //   {
@@ -72,67 +83,37 @@ function buildCharts() {
     var rankData = [
       {
         y: ["Rank"],
-        x: [ranks[328]],
-        text: names[328],
+        x: [ranks[242]],
+        text: names[242],
         type: "bar",
         orientation: "h"
       }
     ];
     var rankLayout = {
       autosize: false,
-      width: 1000,
-      height: 300,
+      width: 800,
+      height: 100,
       margin: {
-        l: 50,
-        r: 50,
-        b: 100,
-        t: 100,
-        pad: 4
+        l: 20,
+        r: 10,
+        b: 10,
+        t: 10,
+        pad: 2
       },
       xaxis: {
         tickvals: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        tickmode: 'array',
-        automargin: false,
-        titlefont: { size:30 },
+        automargin: false
       },
-      title: names[328],
-      margin: { t: 30, l: 310 }
+      margin: { t: 2, l: 50 }
     };
 
 //Applications Received
     var appsData = [
       {
         y: ["Apps Received"],
-        x: [apps[328]],
+        x: [apps[242]],
         
-        text: names[328],
-        type: "bar",
-        orientation: "h"
-      }
-    ];
-
-    var acceptLayout = {
-      autosize: false,
-      width: 1000,
-      height: 300,
-      margin: {
-        l: 50,
-        r: 50,
-        b: 100,
-        t: 100,
-        pad: 4
-      },
-      xticks: [3000, 6000, 9000, 12000],
-      title: "",
-      margin: { t: 30, l: 310 }
-    };
-
-    //Applications Accepted
-    var acceptData = [
-      {
-        y: ["Apps Accepted"],
-        x: [accepts[328]],
-        text: names[328],
+        text: names[242],
         type: "bar",
         orientation: "h"
       }
@@ -140,25 +121,50 @@ function buildCharts() {
 
     var appsLayout = {
       autosize: false,
-      width: 1000,
-      height: 300,
+      width: 800,
+      height: 100,
       margin: {
-        l: 50,
-        r: 50,
-        b: 100,
-        t: 100,
-        pad: 4
+        l: 20,
+        r: 10,
+        b: 10,
+        t: 10,
+        pad: 2
       },
-      title: "",
-      margin: { t: 30, l: 310 }
+      xticks: [3000, 6000, 9000, 12000],
+      margin: { t: 2, l: 50 }
+    };
+
+    //Applications Accepted
+    var acceptData = [
+      {
+        y: ["Apps Accepted"],
+        x: [accepts[242]],
+        text: names[242],
+        type: "bar",
+        orientation: "h"
+      }
+    ];
+
+    var acceptLayout = {
+      autosize: false,
+      width: 800,
+      height: 100,
+      margin: {
+        l: 20,
+        r: 10,
+        b: 10,
+        t: 10,
+        pad: 2
+      },
+      margin: { t: 2, l: 50 }
     };
 
     //Tuition
     var tuitionData = [
       {
         y: ["Tuition"],
-        x: [tuition[328]],
-        text: names[328],
+        x: [tuition[242]],
+        text: names[242],
         type: "bar",
         orientation: "h"
       }
@@ -166,31 +172,50 @@ function buildCharts() {
 
     var tuitionLayout = {
       autosize: false,
-      width: 1000,
-      height: 300,
+      width: 800,
+      height: 100,
       margin: {
-        l: 50,
-        r: 50,
-        b: 100,
-        t: 100,
-        pad: 4
+        l: 20,
+        r: 10,
+        b: 10,
+        t: 10,
+        pad: 2
       },
-      title: "",
-      margin: { t: 30, l: 310 }
+      margin: { t: 2, l: 50 }
     };
+
+        //Room and Board
+    var boardData = [
+      {
+        y: ["Room & Board"],
+        x: [board_cost[242]],
+        text: names[242],
+        type: "bar",
+        orientation: "h"
+        }
+    ];
+    
+    var boardLayout = {
+        autosize: false,
+        width: 800,
+        height: 100,
+        margin: {
+          l: 20,
+          r: 10,
+          b: 10,
+          t: 10,
+          pad: 2
+        },
+        margin: { t: 2, l: 50 }
+      };
 
     Plotly.newPlot("bar1", rankData, rankLayout);
     Plotly.newPlot("bar2", appsData, appsLayout);
     Plotly.newPlot("bar3", acceptData, acceptLayout);
     Plotly.newPlot("bar4", tuitionData, tuitionLayout);
+    Plotly.newPlot("bar5", boardData, boardLayout);
   });
 }
-
-
-
-
-
-
 
 
 function init() {
@@ -198,7 +223,7 @@ function init() {
 
   // select option
   d3.json("/merged_data").then(function(data) {
-    var names = data.map(data => data.Name);
+    var names = data.map(data => data.name_x);
     names.forEach((school) => {
       selector
         .append("option")
@@ -207,7 +232,7 @@ function init() {
     });
 
     // first school
-    var firstSchool = names[0];
+    var firstSchool = names[242];
     buildCharts(firstSchool);
     buildMetadata(firstSchool);
   });
@@ -220,24 +245,6 @@ function optionChanged(newSchool) {
 }
 
 init();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

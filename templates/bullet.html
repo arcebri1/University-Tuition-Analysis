@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Your Perfect School</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
@@ -40,18 +40,18 @@
     <div class="row">
       <div class="col-md-2">
         <div class="well">
-          <h5>University:</h5>
+          <h5>Choose your University:</h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 id="universityChoice" class="panel-title">University Info</h3>
+            <h3 id="universityChoice" class="panel-title">University Statistics</h3>
           </div>
           <div id="school-metadata" class="panel-body"></div>
         </div>
       </div>
       <div class="col-md-12">
-        <div id="bar1"></div>
+        <div id="bar1">University of Chicago</div>
       </div>
       <div class="col-md-12">
         <div id="bar2"></div>
@@ -81,7 +81,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
-  <script type="text/javascript" src="./static/js/bullet.js"></script>
+  <script type="text/javascript" src="static/js/bullet.js"></script>
 
 </body>
 
