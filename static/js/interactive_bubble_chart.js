@@ -27,6 +27,7 @@ let xAxis = chartGroup.append("g")
 //appending y axis
 let yAxis = chartGroup.append("g");
 
+//setting initial paramter for chartData - get's updated on user interactions
 let chartData = null;
 
 //setting initial parameters for x axis
@@ -54,7 +55,7 @@ function xScale(data, chosenXAxis) {
     return xLinearScale;
 }
 
-//functions used to update yAxis-variable and x-axis-variable upon user-axis-click 
+//functions for updating yAxis-variable and x-axis-variable upon user selction 
 function renderAxes(newYScale, yAxis) {
     let leftAxis = d3.axisLeft(newYScale);
 
@@ -73,7 +74,7 @@ function renderXAxes(newXScale, xAxis) {
     return xAxis;
 }
 
-//function to update circle group with new data points
+//function to update circle group with new data points and get rid of extra circles not being used
 function  renderCircles(data, newYScale, chosenYAxis, newXScale, chosenXAxis) {
     
     const circlesGroup = chartGroup.selectAll("circle")
@@ -97,6 +98,7 @@ function  renderCircles(data, newYScale, chosenYAxis, newXScale, chosenXAxis) {
 function updatetoolTip(chosenYAxis, circlesGroup) {
     var label;
 
+    //determining which info should be in the tooltip
     if (chosenYAxis === "early_career_pay") {
         label = "Early Career Pay";
     }
@@ -140,6 +142,7 @@ function renderNewChart(){
 }
 
 //reading in the json data
+//rendering inital chart
 d3.json("/merged_data").then(function(data, err) {
     if (err) throw err;
 
