@@ -155,7 +155,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   }
 ///
 
-d3.csv("datasets/tuition_vs_salary.csv").then(function(Tuition_Cost) {
+d3.json("/tuition_vs_salary").then(function(Tuition_Cost) {
 
     // Step 1: Parse Data/Cast as numbers
     // ==============================
