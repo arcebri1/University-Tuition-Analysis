@@ -34,7 +34,7 @@ function buildMetadata() {
         var dict = {
           "University": names,
           "Rank": ranks,
-          "Applications Received": `$${apps}`,
+          "Applications Received": `${apps}`,
           "Applications Accepted": `$${accepts}`,
           "Out-State Tuition": `$${out_state_tuition}`,
           "Room & Board Cost": `$${board_cost}`
