@@ -82,8 +82,8 @@ function buildCharts() {
     // ];
     var rankData = [
       {
-        y: ["Rank"],
-        x: [ranks[328]],
+        y: ["Rank", "Apps Received", "Apps Accepted", "Tuition", "Room & Board"].reverse(),
+        x: [ranks[328], apps[328], accepts[328], tuition[328], board_cost[328]].reverse(),
         text: names[328],
         type: "bar",
         orientation: "h"
@@ -92,7 +92,7 @@ function buildCharts() {
     var rankLayout = {
       autosize: false,
       width: 800,
-      height: 100,
+      height: 500,
       margin: {
         l: 20,
         r: 10,
@@ -100,12 +100,13 @@ function buildCharts() {
         t: 10,
         pad: 2
       },
-      xaxis: {
-        tickmode: "linear", //  If "linear", the placement of the ticks is determined by a starting position `tick0` and a tick step `dtick`
-        tick0: 0.5,
-        dtick: 0.5
-      },
-      margin: { t: 2, l: 50 }
+      // xaxis: {
+      //   tickmode: "linear",
+      //   tick0: 0.5,
+      //   dtick: 0.5,
+      //   ntick: 10
+      // },
+      margin: { t: 30, l: 50 }
     };
 
 //Applications Received
