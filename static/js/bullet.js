@@ -64,7 +64,7 @@ function buildMetadata() {
 
 function buildCharts() {
   d3.json("/merged_data").then(function(schoolData) {
-    var names = schoolData.map(school => school.Name);
+    var names = schoolData.map(school => school.name_x);
     var ranks = schoolData.map(school => school.rank);
     var apps = schoolData.map(school => school.Apps);
     var accepts = schoolData.map(school => school.Accept);
@@ -83,8 +83,8 @@ function buildCharts() {
     var rankData = [
       {
         y: ["Rank"],
-        x: [ranks[242]],
-        text: names[242],
+        x: ranks[328],
+        text: names[328],
         type: "bar",
         orientation: "h"
       }
@@ -101,8 +101,9 @@ function buildCharts() {
         pad: 2
       },
       xaxis: {
-        tickvals: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        automargin: false
+        tickmode: "linear", //  If "linear", the placement of the ticks is determined by a starting position `tick0` and a tick step `dtick`
+        tick0: 0.5,
+        dtick: 0.5
       },
       margin: { t: 2, l: 50 }
     };
@@ -111,9 +112,9 @@ function buildCharts() {
     var appsData = [
       {
         y: ["Apps Received"],
-        x: [apps[242]],
+        x: [apps[328]],
         
-        text: names[242],
+        text: names[328],
         type: "bar",
         orientation: "h"
       }
@@ -138,8 +139,8 @@ function buildCharts() {
     var acceptData = [
       {
         y: ["Apps Accepted"],
-        x: [accepts[242]],
-        text: names[242],
+        x: [accepts[328]],
+        text: names[328],
         type: "bar",
         orientation: "h"
       }
@@ -163,8 +164,8 @@ function buildCharts() {
     var tuitionData = [
       {
         y: ["Tuition"],
-        x: [tuition[242]],
-        text: names[242],
+        x: [tuition[328]],
+        text: names[328],
         type: "bar",
         orientation: "h"
       }
@@ -188,8 +189,8 @@ function buildCharts() {
     var boardData = [
       {
         y: ["Room & Board"],
-        x: [board_cost[242]],
-        text: names[242],
+        x: [board_cost[328]],
+        text: names[328],
         type: "bar",
         orientation: "h"
         }
