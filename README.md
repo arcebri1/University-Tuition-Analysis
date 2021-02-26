@@ -2,10 +2,24 @@
 
 - - - 
 
+We created an interactive tool to help users choose a university within their budget that also maximizes their earning potential.
 
 - - -
 
-##
+## Step by Step Process
+
+* The data was extracted from Kaggle, cleaned and merged using jupyter notebook and converted to sql
+
+* Created a barchart to showcase the overview of public and private tuition in universities throughout the US
+
+* Created a scatter plot with a dropdown box to choose between: early, intermediate income to showcase an overview of tuition vs income
+
+* Created our interactive tool, a bubble chart, where the user can change the Y-axis depending if they want to see tuition againt grad rate, early income, etc
+
+* Created a bullet chart so the user would be able to individually pick a university and look at it more closely in terms of tuition, acceptance rate, grad rate, etc
+
+
+**Our presentation slide can be found [here](https://docs.google.com/presentation/d/1yypQXLj--M6v4PQLdcl0M9WDD-Iy0zlNJL6ttzIRYk8/edit#slide=id.p) on google slides**
 
 - - -
 
