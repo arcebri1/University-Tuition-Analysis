@@ -18,6 +18,8 @@ We created an interactive tool to help users choose a university within their bu
 
 * Created a bullet chart so the user would be able to individually pick a university and look at it more closely in terms of tuition, acceptance rate, grad rate, etc
 
+* Used flask to create a website that could be run locally
+
 
 **Our presentation slide can be found [here](https://docs.google.com/presentation/d/1yypQXLj--M6v4PQLdcl0M9WDD-Iy0zlNJL6ttzIRYk8/edit#slide=id.p) on google slides**
 
